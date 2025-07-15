@@ -7,9 +7,11 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
+    arduino_bot_description_dir = get_package_share_directory("arduinobot_description")
+    
     model_arg = DeclareLaunchArgument(
         name="model", 
-        default_value=os.path.join(get_package_share_directory("arduinobot_description"), 
+        default_value=os.path.join(arduino_bot_description_dir, 
                                     "urdf", 
                                     "arduinobot.urdf.xacro"),
         description="Absolute path to the robot URDF file"
