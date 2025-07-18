@@ -5,6 +5,8 @@
     <xacro:property name="effort" value="30.0" />
     <xacro:property name="velocity" value="10.0" />
 
+    <xacro:arg name="is_ignition" default="true"/>
+
     <xacro:macro name="default_inertial" params="mass">
         <inertial>
             <mass value="${mass}"/>
@@ -176,25 +178,78 @@
         <limit lower="0.0" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
     </joint>
 
-    <!-- <link name="rgb_camera">
+    <link name="rgb_camera">
         <visual>
-            <origin rpy="-1.57 0.0 -1.57" xyz="-0.1 0.125 0.135"/>
+            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
         <collision>
-            <origin rpy="-1.57 0.0 -1.57" xyz="-0.1 0.125 0.135"/>
+            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
+
+        <inertial>
+            <mass value="0.001"/>
+        </inertial>
     </link>
 
     <joint name="rgb_camera_joint" type="fixed">
         <parent link="base_link"/>
         <child link="rgb_camera"/>
         <origin rpy="0 -0.5 1.57" xyz="0 0.45 0.2"/>
-    </joint> -->
+    </joint>
+
+    <gazebo reference="rgb_camera">
+        <sensor name="camera" type="camera">
+            <always_on>true</always_on>
+            <update_rate>30.0</update_rate>
+            <visualize>true</visualize>
+            <topic>/image_raw</topic>
+            <gz_frame_id>/rgb_camera</gz_frame_id>
+            <camera name="camera">
+            <horizontal_fov>1.21126</horizontal_fov>
+            <image>
+                <width>2304</width>
+                <height>1296</height>
+                <format>R8G8B8</format>
+            </image>
+            <distortion>
+                <k1>0.0</k1>
+                <k2>0.0</k2>
+                <k3>0.0</k3>
+                <p1>0.0</p1>
+                <p2>0.0</p2>
+                <center>0.5 0.5</center>
+            </distortion>
+            </camera>
+        </sensor>   
+    </gazebo>
+
+    <gazebo>
+
+    <!-- ROS 2 Humble -->
+    <xacro:if value="$(arg is_ignition)">
+        <!-- <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <parameters>$(find arduinobot_controller)/config/arduinobot_controllers.yaml</parameters>
+        </plugin> -->
+        <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+        </plugin>
+    </xacro:if>
+
+    <!-- ROS 2 Iron or above -->
+    <xacro:unless value="$(arg is_ignition)">
+        <!-- <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find arduinobot_controller)/config/arduinobot_controllers.yaml</parameters>
+        </plugin> -->
+        <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+        </plugin>
+    </xacro:unless>
+    </gazebo>
 
 </robot>
