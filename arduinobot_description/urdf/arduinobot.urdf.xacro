@@ -36,6 +36,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="blue">
+                <color rgba="0.1 0.1 0.8 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
@@ -58,6 +61,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
@@ -83,6 +89,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
         </visual>
     </link>
 
@@ -101,6 +110,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin rpy="${PI/2} 0 ${PI/2}" xyz="-0.03 -0.4 -0.06"/>
@@ -125,6 +137,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="grey">
+                <color rgba="0.5 0.5 0.5 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin rpy="0 0 ${PI/2}" xyz="0 -0.05 -0.15"/>
@@ -147,6 +162,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/right_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="blue">
+                <color rgba="0.1 0.1 0.8 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin xyz="-0.1 0.5 -0.1" rpy="0 0 -${PI/2}"/>
@@ -163,6 +181,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/left_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="blue">
+                <color rgba="0.1 0.1 0.8 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin xyz="-0.04 0.5 -0.1" rpy="0 0 -${PI/2}"/>
@@ -195,6 +216,9 @@
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="purple">
+                <color rgba="0.8 0.1 0.8 1.0"/>
+            </material>
         </visual>
         <collision>
             <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
@@ -213,5 +237,31 @@
         <child link="rgb_camera"/>
         <origin rpy="0 -0.5 1.57" xyz="0 0.45 0.2"/>
     </joint>
+
+    <gazebo reference="rgb_camera">
+        <sensor name="rgb_camera" type="camera">
+            <always_on>true</always_on>
+            <update_rate>30.0</update_rate>
+            <visualize>true</visualize>
+            <topic>/image_raw</topic>
+            <gz_frame_id>/rgb_camera</gz_frame_id>
+            <camera name="camera">
+            <horizontal_fov>1.21126</horizontal_fov>
+            <image>
+                <width>2304</width>
+                <height>1296</height>
+                <format>R8G8B8</format>
+            </image>
+            <distortion>
+                <k1>0.0</k1>
+                <k2>0.0</k2>
+                <k3>0.0</k3>
+                <p1>0.0</p1>
+                <p2>0.0</p2>
+                <center>0.5 0.5</center>
+            </distortion>
+            </camera>
+        </sensor>   
+    </gazebo>
 
 </robot>
