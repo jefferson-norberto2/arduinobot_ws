@@ -212,7 +212,7 @@
 
     <link name="rgb_camera">
         <visual>
-            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
+            <origin rpy="-1.57 0 -1.57" xyz="-0.07 0.13 0.15"/>
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
@@ -221,15 +221,11 @@
             </material>
         </visual>
         <collision>
-            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
+            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.13 0.15"/>
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
-
-        <inertial>
-            <mass value="0.001"/>
-        </inertial>
     </link>
 
     <joint name="rgb_camera_joint" type="fixed">
