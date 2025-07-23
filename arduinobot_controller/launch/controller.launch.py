@@ -29,19 +29,46 @@ def generate_launch_description():
         package='controller_manager',
         executable='ros2_control_node',
         parameters=[{"robot_description": robot_description},
-                    os.path.join(get_package_share_directory('arduinobot_controller', 'config', 'arduinobot_controllers.yaml'))],
+                    os.path.join(get_package_share_directory('arduinobot_controller'), 'config', 'arduinobot_controllers.yaml')],
         output='screen'
     )
 
     # Add node to every controller in controller.yaml
 
-    joint_state_broadcaster = Node(
+    joint_state_broadcaster_spawner = Node(
         package='controller_manager',
-        executable='spawer',
-        arguments=['']
+        executable='spawner',
+        arguments=[
+            'joint_state_broadcaster',
+            '--controller-manager',
+            '/controller_manager'
+        ]
+    )
+
+    arm_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'arm_controller',
+            '--controller-manager',
+            '/controller_manager'
+        ]
+    )
+
+    gripper_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'gripper_controller',
+            '--controller-manager',
+            '/controller_manager'
+        ]
     )
 
     return LaunchDescription([
-        # Add your launch configurations here
-        # For example, you can include nodes, parameters, etc.
+        robot_state_publisher,
+        controller_manager,
+        joint_state_broadcaster_spawner,
+        arm_controller_spawner,
+        gripper_controller_spawner,
     ])
