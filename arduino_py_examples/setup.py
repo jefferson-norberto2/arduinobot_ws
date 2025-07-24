@@ -23,6 +23,7 @@ setup(
             'simple_publisher = arduino_py_examples.simple_publisher:main',
             'simple_subscriber = arduino_py_examples.simple_subscriber:main',
             'simple_parameter = arduino_py_examples.simple_parameter:main',
+            'simple_service_server = arduino_py_examples.simple_service_server:main',
         ],
     },
 )
