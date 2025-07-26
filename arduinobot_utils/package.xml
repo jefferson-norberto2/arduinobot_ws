@@ -12,6 +12,7 @@
 
   <depend>rclpy</depend>
   <depend>arduinobot_msgs</depend>
+  <depend>tf_transformations</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
